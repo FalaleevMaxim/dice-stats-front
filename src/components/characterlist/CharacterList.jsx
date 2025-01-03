@@ -4,6 +4,7 @@ import classes from "./CharacterList.module.css";
 function CharacterList({refreshKey, onSelectionChange}) {
     const [characters, setCharacters] = useState([])
     const [selected, setSelected] = useState(null)
+    const [search, setSearch] = useState("")
 
     async function fetchCharacters() {
         const response = await fetch("http://localhost:8080/character/all")
@@ -21,16 +22,32 @@ function CharacterList({refreshKey, onSelectionChange}) {
         onSelectionChange(newSelection)
     }
 
+    function handleSearchChange(e) {
+        setSearch(e.target.value);
+        if (selected) {
+            setSelected(null)
+            onSelectionChange(null)
+        }
+    }
+
     return (
-        <ul className={classes.characterList}>
-            {characters.map((d) => (
-                <li key={d.id}
-                    className={selected === d.id ? classes.active : ""}
-                    onClick={() => changeSelection(d.id)}>
-                    {d.name}
-                </li>
-            ))}
-        </ul>
+        <div className={classes.characterContainer}>
+            <input
+                type="text"
+                value={search}
+                onChange={handleSearchChange}
+                placeholder="Поиск персонажей..."
+            />
+            <ul className={classes.characterList}>
+                {characters.map((d) => (
+                    <li key={d.id}
+                        className={!d.name.toUpperCase().includes(search.toUpperCase()) ? classes.disable : selected === d.id ? classes.active : ""}
+                        onClick={() => changeSelection(d.id)}>
+                        {d.name}
+                    </li>
+                ))}
+            </ul>
+        </div>
     )
 }
 

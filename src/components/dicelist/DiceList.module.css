@@ -1,9 +1,36 @@
+/* Контейнер для списка и текстового поля */
+.diceContainer {
+    display: flex;
+    flex-direction: column; /* Поле ввода и список располагаются вертикально */
+    gap: 0.5em; /* Отступ между текстовым полем и списком */
+    width: 100%; /* Занимает всю ширину контейнера */
+    box-sizing: border-box; /* Учитываем padding и границы */
+}
+
+/* Текстовое поле поиска */
+.diceContainer input[type="text"] {
+    padding: 0.8em;
+    width: 100%;
+    max-width: 100%; /* Не превышает ширину родителя */
+    border: 1px solid #61dafb;
+    border-radius: 5px;
+    background-color: #20232a;
+    color: #61dafb;
+    font-size: 1em;
+    box-sizing: border-box; /* Учитываем padding и границы */
+}
+
+.diceContainer input[type="text"]:focus {
+    outline: none;
+    border-color: #ffffff;
+}
+
 /* Стили для списка */
 .diceList {
     list-style-type: none; /* Убираем маркеры */
     padding: 0;
     width: 100%;
-    max-width: 600px;
+    max-width: calc(100% - 2px); /* Учитываем 2px от border в полосе прокрутки */
     max-height: 500px; /* Ограничение высоты (примерно для 5 элементов) */
     overflow-y: auto; /* Вертикальная прокрутка, если элементы не помещаются */
     border: 1px solid #61dafb; /* Границы для визуального отделения */
@@ -48,6 +75,10 @@
 .diceList li.active {
     background-color: #61dafb; /* Меняем фон при выборе */
     color: #20232a; /* Темный цвет текста */
+}
+
+.diceList li.disable {
+    display: none;
 }
 
 .diceList li:hover {
