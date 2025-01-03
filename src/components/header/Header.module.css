@@ -1,0 +1,77 @@
+/* Логотип */
+.logo {
+    margin-right: 0.5em;
+    height: 3em;
+    will-change: filter, transform;
+    transition: filter 300ms, transform 0.5s ease-out; /* Плавное возвращение */
+    transform-origin: 50% 45%; /* Сдвиг точки вращения */
+}
+
+.logo:hover {
+    filter: drop-shadow(0 0 2em #61dafbaa); /* Эффект затенения */
+    animation: rotateInfinite 2s linear infinite; /* Постоянное вращение */
+}
+
+/* Ключевые кадры для постоянного вращения */
+@keyframes rotateInfinite {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Общий стиль для шапки */
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5em 1em;
+    background-color: #20232a; /* Темный фон */
+    color: #61dafb; /* Цвет текста */
+    border-bottom: 2px solid #61dafb;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Контейнер для логотипа и заголовка */
+.logoContainer {
+    display: flex;
+    align-items: center;
+    text-decoration: none; /* Убираем подчеркивание */
+    color: inherit;
+}
+
+/* Заголовок */
+.title {
+    font-size: 1.5em;
+    font-weight: bold;
+}
+
+/* Навигация */
+.nav {
+    flex-grow: 0;
+}
+
+.navList {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.navItem {
+    margin-left: 1.5em;
+}
+
+.navItem a {
+    text-decoration: none;
+    color: #61dafb;
+    font-size: 1.1em;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.navItem a:hover {
+    color: #fff; /* Изменение цвета при наведении */
+}

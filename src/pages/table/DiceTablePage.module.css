@@ -1,0 +1,101 @@
+/* Основной контейнер для страницы */
+.pageContainer {
+    padding: 1em 2em;
+    background-color: #282c34; /* Темный фон для гармонии с заголовком */
+    color: #61dafb; /* Цвет текста */
+    font-family: Arial, sans-serif;
+    min-height: calc(100vh - 6em); /* Учитываем высоту шапки */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Стили для списка */
+.characterList {
+    list-style-type: none; /* Убираем маркеры */
+    padding: 0;
+    width: 100%;
+    max-width: 600px;
+}
+
+.characterList li {
+    display: flex;
+    align-items: flex-start; /* Выравнивание элементов по верхнему краю */
+    padding: 0.8em 1em;
+    margin: 0.5em 0;
+    background-color: #20232a; /* Темно-серый фон */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.characterList li:hover {
+    background-color: #61dafb; /* Меняем фон при наведении */
+    color: #20232a; /* Темный цвет текста */
+}
+
+/* Стили для изображений */
+.characterList li img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 1em; /* Отступ справа для текста */
+    border-radius: 5px; /* Слегка скругляем углы */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Стили для текста */
+.characterList li span {
+    font-size: 1.1em;
+    word-wrap: break-word; /* Переносим текст на новую строку, если он длинный */
+    overflow-wrap: break-word; /* Совместимость с другими браузерами */
+    line-height: 1.5; /* Увеличиваем межстрочный интервал для читаемости */
+}
+
+/* Стили для формы */
+form {
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    width: 100%;
+    max-width: 600px;
+}
+
+label {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+input {
+    padding: 0.8em;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #61dafb;
+    border-radius: 5px;
+    background-color: #20232a;
+    color: #61dafb;
+}
+
+input:focus {
+    outline: none;
+    border-color: #ffffff;
+}
+
+button {
+    padding: 0.8em 2em;
+    border: none;
+    border-radius: 5px;
+    background-color: #61dafb;
+    color: #20232a;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #ffffff;
+    color: #20232a;
+}
