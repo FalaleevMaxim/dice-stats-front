@@ -41,8 +41,8 @@ function DiceList({refreshKey, onSelectionChange}) {
             <ul className={classes.diceList}>
                 {dice.map((d) => (
                     <li key={d.id}
-                        className={!d.name.toUpperCase().includes(search.toUpperCase()) ? classes.disable : selected === d.id ? classes.active : ""}
-                        onClick={() => changeSelection(d.id)}>
+                        className={!d.name.toUpperCase().includes(search.toUpperCase()) ? classes.disable : selected?.id === d.id ? classes.active : ""}
+                        onClick={() => changeSelection(d)}>
                         <img src={d.image} alt={d.name}/>
                         <span>{d.name}</span>
                     </li>

@@ -41,8 +41,8 @@ function CharacterList({refreshKey, onSelectionChange}) {
             <ul className={classes.characterList}>
                 {characters.map((d) => (
                     <li key={d.id}
-                        className={!d.name.toUpperCase().includes(search.toUpperCase()) ? classes.disable : selected === d.id ? classes.active : ""}
-                        onClick={() => changeSelection(d.id)}>
+                        className={!d.name.toUpperCase().includes(search.toUpperCase()) ? classes.disable : selected?.id === d.id ? classes.active : ""}
+                        onClick={() => changeSelection(d)}>
                         {d.name}
                     </li>
                 ))}

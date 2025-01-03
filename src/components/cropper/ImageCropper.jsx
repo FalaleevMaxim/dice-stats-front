@@ -1,12 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Cropper from 'react-easy-crop';
 import getCroppedImg from './cropImage'; // Утилита для обрезки изображения
 
-const ImageCropper = ({ onSave }) => {
+const ImageCropper = ({ initialImage, onSave }) => {
     const [imageSrc, setImageSrc] = useState(null); // Источник изображения
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
+
+    // Устанавливаем начальное изображение, если оно передано
+    useEffect(() => {
+        if (initialImage) {
+            setImageSrc(initialImage);
+        }
+        return () => setImageSrc(null)
+    }, [initialImage]);
 
     const handleFileChange = (event) => {
         const file = event.target.files[0];
@@ -61,6 +69,7 @@ const ImageCropper = ({ onSave }) => {
                             onChange={(e) => setZoom(Number(e.target.value))}
                         />
                         <button onClick={handleSave}>Сохранить</button>
+                        <button onClick={() => setImageSrc(null)}>Отмена</button>
                     </div>
                 </div>
             )}

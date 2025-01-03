@@ -7,37 +7,49 @@ import CharacterList from "../../components/characterlist/CharacterList.jsx";
 function CharactersPage() {
     const [inputName, setInputName] = useState("")
     const [refreshKey, setRefreshKey] = useState(0);
+    const [selected, setSelected] = useState(null);
 
     async function saveCharacter() {
-        if (!inputName) {
-            toast.error("Не введено имя")
-        }
-        const response = await fetch('http://localhost:8080/character/add', {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                name: inputName
+        let response
+        if (selected) {
+            response = await fetch('http://localhost:8080/character/' + selected.id, {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: inputName
+                })
             })
-        })
+        } else {
+            response = await fetch('http://localhost:8080/character/add', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: inputName
+                })
+            })
+        }
         if (response.ok) {
             setRefreshKey((prevKey) => prevKey + 1)
-            console.log("Успешно добавлен!")
-            toast.success("Успешно добавлен!");
+            toast.success(`Успешно ${selected ? "обновлён" : "добавлен"}!`);
         }
     }
 
     function onSelectionChange(newSel) {
-        console.log(`Selected: ${newSel}`)
+        setInputName(newSel ? newSel.name : "")
+        setSelected(newSel)
     }
 
     return (
         <div className={classes.pageContainer}>
             <CharacterList refreshKey={refreshKey} onSelectionChange={onSelectionChange}/>
             <form>
-                <label htmlFor="name">Добавить персонажа: </label>
+                <label htmlFor="name">{selected ? "Переименовать" : "Добавить"} персонажа: </label>
                 <input
                     name="name"
                     type="text"
@@ -45,7 +57,7 @@ function CharactersPage() {
                     onChange={(event) => setInputName(event.target.value)}
                 />
             </form>
-            <button onClick={saveCharacter}>Сохранить</button>
+            <button onClick={saveCharacter} disabled={!inputName}>Сохранить</button>
             <ToastContainer autoClose={5000} position="top-center"/>
         </div>
     );

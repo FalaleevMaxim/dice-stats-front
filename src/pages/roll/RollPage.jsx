@@ -22,7 +22,7 @@ function  RollPage() {
             body: JSON.stringify({
                 result: rollResult,
                 character: selectedCharacter,
-                dice: selectedDice
+                dice: selectedDice.id
             })
         })
         if (response.ok) {

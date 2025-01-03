@@ -104,3 +104,8 @@ button:hover {
     background-color: #ffffff;
     color: #20232a;
 }
+
+button:disabled {
+    background-color: #666;
+    cursor: default;
+}
