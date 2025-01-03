@@ -10,28 +10,6 @@
     align-items: center;
 }
 
-/* Стили для списка персонажей */
-.characterList {
-    list-style-type: none; /* Убираем маркеры */
-    padding: 0;
-    width: 100%;
-    max-width: 600px;
-}
-
-.characterList li {
-    padding: 0.8em 1em;
-    margin: 0.5em 0;
-    background-color: #20232a; /* Темно-серый фон */
-    border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s ease;
-}
-
-.characterList li:hover {
-    background-color: #61dafb; /* Меняем фон при наведении */
-    color: #20232a; /* Темный цвет текста */
-}
-
 /* Стили для формы */
 form {
     margin-top: 2em;

@@ -1,22 +1,17 @@
-import {useState, useEffect} from 'react'
+import {ToastContainer, toast} from 'react-toastify';
+import {useState} from 'react'
 import classes from './CharactersPage.module.css';
+import CharacterList from "../../components/characterlist/CharacterList.jsx";
 
 
 function CharactersPage() {
-    const [characters, setCharacters] = useState([])
     const [inputName, setInputName] = useState("")
-
-    async function fetchCharacters() {
-        const response = await fetch("http://localhost:8080/character/all")
-        const chars = await response.json();
-        setCharacters(chars)
-    }
-
-    useEffect(() => {
-        fetchCharacters()
-    }, [characters]);
+    const [refreshKey, setRefreshKey] = useState(0);
 
     async function saveCharacter() {
+        if (!inputName) {
+            toast.error("Не введено имя")
+        }
         const response = await fetch('http://localhost:8080/character/add', {
             method: 'POST',
             headers: {
@@ -27,17 +22,20 @@ function CharactersPage() {
                 name: inputName
             })
         })
-        const char = await response.json();
-        setCharacters((prevCharacters) => [...prevCharacters, char])
+        if (response.ok) {
+            setRefreshKey((prevKey) => prevKey + 1)
+            console.log("Успешно добавлен!")
+            toast.success("Успешно добавлен!");
+        }
+    }
+
+    function onSelectionChange(newSel) {
+        console.log(`Selected: ${newSel}`)
     }
 
     return (
         <div className={classes.pageContainer}>
-            <ul className={classes.characterList}>
-                {characters.map((char) => (
-                    <li key={char.id}>{char.name}</li>
-                ))}
-            </ul>
+            <CharacterList refreshKey={refreshKey} onSelectionChange={onSelectionChange}/>
             <form>
                 <label htmlFor="name">Добавить персонажа: </label>
                 <input
@@ -46,11 +44,11 @@ function CharactersPage() {
                     value={inputName}
                     onChange={(event) => setInputName(event.target.value)}
                 />
-                <button onClick={saveCharacter}>Сохранить</button>
             </form>
+            <button onClick={saveCharacter}>Сохранить</button>
+            <ToastContainer autoClose={5000} position="top-center"/>
         </div>
     );
-
 }
 
 export default CharactersPage

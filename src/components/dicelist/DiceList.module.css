@@ -1,0 +1,74 @@
+/* Стили для списка */
+.diceList {
+    list-style-type: none; /* Убираем маркеры */
+    padding: 0;
+    width: 100%;
+    max-width: 600px;
+    max-height: 500px; /* Ограничение высоты (примерно для 5 элементов) */
+    overflow-y: auto; /* Вертикальная прокрутка, если элементы не помещаются */
+    border: 1px solid #61dafb; /* Границы для визуального отделения */
+    border-radius: 5px;
+    background-color: #20232a; /* Фон списка */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Стили для полосы прокрутки */
+.diceList::-webkit-scrollbar {
+    width: 8px; /* Ширина вертикальной полосы */
+    height: 8px; /* Высота горизонтальной полосы (если есть) */
+}
+
+.diceList::-webkit-scrollbar-track {
+    background: #282c34; /* Фон дорожки */
+    border-radius: 5px; /* Скругляем углы */
+}
+
+.diceList::-webkit-scrollbar-thumb {
+    background: #61dafb; /* Цвет прокрутки */
+    border-radius: 5px; /* Скругленные края */
+    border: 2px solid #20232a; /* Пространство между прокруткой и дорожкой */
+}
+
+.diceList::-webkit-scrollbar-thumb:hover {
+    background: #ffffff; /* Цвет прокрутки при наведении */
+}
+
+.diceList li {
+    display: flex;
+    align-items: flex-start; /* Выравнивание элементов по верхнему краю */
+    padding: 0.8em 1em;
+    margin: 0.5em 0;
+    background-color: #20232a; /* Темно-серый фон */
+    color: #61dafb; /* Цвет текста */
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.3s ease;
+}
+
+.diceList li.active {
+    background-color: #61dafb; /* Меняем фон при выборе */
+    color: #20232a; /* Темный цвет текста */
+}
+
+.diceList li:hover {
+    background-color: #61dafb; /* Меняем фон при наведении */
+    color: #20232a; /* Темный цвет текста */
+}
+
+/* Стили для изображений */
+.diceList li img {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-right: 1em; /* Отступ справа для текста */
+    border-radius: 5px; /* Слегка скругляем углы */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Стили для текста */
+.diceList li span {
+    font-size: 1.1em;
+    word-wrap: break-word; /* Переносим текст на новую строку, если он длинный */
+    overflow-wrap: break-word; /* Совместимость с другими браузерами */
+    line-height: 1.5; /* Увеличиваем межстрочный интервал для читаемости */
+}

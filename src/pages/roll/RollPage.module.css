@@ -1,0 +1,86 @@
+/* Контейнер всей страницы */
+.pageContainer {
+    padding: 1em 2em;
+    background-color: #20232a; /* Тёмный фон */
+    color: #61dafb; /* Текст голубого цвета */
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5em;
+}
+
+/* Контейнер для списков (CharacterList и DiceList) */
+.selectionContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 1200px; /* Максимальная ширина контейнера */
+    gap: 1em;
+}
+
+/* Общие стили для списка */
+.selectionContainer > * {
+    flex: 1; /* Списки занимают равное пространство */
+    max-height: 500px; /* Ограничиваем высоту */
+    overflow-y: auto; /* Добавляем прокрутку, если содержимое выходит за границы */
+    border: 1px solid #61dafb; /* Граница для визуального разделения */
+    border-radius: 5px;
+    background-color: #282c34; /* Фон списков */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Стили для формы */
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+    width: 100%;
+    max-width: 600px;
+}
+
+.form label {
+    font-size: 1.1em;
+    font-weight: bold;
+}
+
+.form input {
+    padding: 0.8em;
+    width: 100%;
+    max-width: 400px;
+    border: 1px solid #61dafb;
+    border-radius: 5px;
+    background-color: #20232a;
+    color: #61dafb;
+}
+
+.form input:focus {
+    outline: none;
+    border-color: #ffffff;
+}
+
+.form button {
+    padding: 0.8em 2em;
+    border: none;
+    border-radius: 5px;
+    background-color: #61dafb;
+    color: #20232a;
+    font-weight: bold;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form button:hover {
+    background-color: #ffffff;
+    color: #20232a;
+}
+
+/* Убираем стандартный стиль стрелочек */
+input[type="number"] {
+    -moz-appearance: textfield; /* Убираем стрелки в Firefox */
+    -webkit-appearance: none; /* Убираем стрелки в WebKit-браузерах */
+    appearance: none; /* Универсальное свойство */
+}

@@ -11,14 +11,14 @@
 }
 
 /* Стили для списка */
-.characterList {
+.diceList {
     list-style-type: none; /* Убираем маркеры */
     padding: 0;
     width: 100%;
     max-width: 600px;
 }
 
-.characterList li {
+.diceList li {
     display: flex;
     align-items: flex-start; /* Выравнивание элементов по верхнему краю */
     padding: 0.8em 1em;
@@ -29,13 +29,18 @@
     transition: background-color 0.3s ease;
 }
 
-.characterList li:hover {
+.diceList li:hover {
     background-color: #61dafb; /* Меняем фон при наведении */
     color: #20232a; /* Темный цвет текста */
 }
 
+.active {
+    background-color: #61dafb; /* Меняем фон при выборе */
+    color: #20232a; /* Темный цвет текста */
+}
+
 /* Стили для изображений */
-.characterList li img {
+.diceList li img {
     width: 100px;
     height: 100px;
     object-fit: cover;
@@ -45,7 +50,7 @@
 }
 
 /* Стили для текста */
-.characterList li span {
+.diceList li span {
     font-size: 1.1em;
     word-wrap: break-word; /* Переносим текст на новую строку, если он длинный */
     overflow-wrap: break-word; /* Совместимость с другими браузерами */
