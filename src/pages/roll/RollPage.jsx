@@ -10,9 +10,6 @@ function  RollPage() {
     const [selectedDice, setSelectedDice] = useState(null)
 
     async function saveRoll() {
-        if (selectedCharacter == null || selectedDice == null) {
-            toast.error("Не выбран персонаж или дайс")
-        }
         const response = await fetch('http://localhost:8080/roll/add', {
             method: 'POST',
             headers: {
@@ -50,7 +47,7 @@ function  RollPage() {
                     onChange={(e) => setRollResult(e.target.value)}
                 />
             </form>
-            <button type="button" onClick={saveRoll}>Сохранить</button>
+            <button type="button" onClick={saveRoll} disabled={!selectedDice || !selectedCharacter || !rollResult}>Сохранить</button>
             <ToastContainer autoClose={5000} position="top-center" theme={"dark"}/>
         </div>
     );
