@@ -1,5 +1,5 @@
 /* Контейнер для списка и текстового поля */
-.diceContainer {
+.listContainer {
     display: flex;
     flex-direction: column; /* Поле ввода и список располагаются вертикально */
     gap: 0.5em; /* Отступ между текстовым полем и списком */
@@ -8,7 +8,7 @@
 }
 
 /* Текстовое поле поиска */
-.diceContainer input[type="text"] {
+.listContainer input[type="text"] {
     padding: 0.8em;
     width: 100%;
     max-width: 100%; /* Не превышает ширину родителя */
@@ -20,14 +20,16 @@
     box-sizing: border-box; /* Учитываем padding и границы */
 }
 
-.diceContainer input[type="text"]:focus {
+.listContainer input[type="text"]:focus {
     outline: none;
     border-color: #ffffff;
 }
 
 /* Стили для списка */
-.diceList {
+.list {
     list-style-type: none; /* Убираем маркеры */
+    margin-top: 0;
+    margin-bottom: 0;
     padding: 0;
     width: 100%;
     max-width: calc(100% - 2px); /* Учитываем 2px от border в полосе прокрутки */
@@ -40,27 +42,27 @@
 }
 
 /* Стили для полосы прокрутки */
-.diceList::-webkit-scrollbar {
+.list::-webkit-scrollbar {
     width: 8px; /* Ширина вертикальной полосы */
     height: 8px; /* Высота горизонтальной полосы (если есть) */
 }
 
-.diceList::-webkit-scrollbar-track {
+.list::-webkit-scrollbar-track {
     background: #282c34; /* Фон дорожки */
     border-radius: 5px; /* Скругляем углы */
 }
 
-.diceList::-webkit-scrollbar-thumb {
+.list::-webkit-scrollbar-thumb {
     background: #61dafb; /* Цвет прокрутки */
     border-radius: 5px; /* Скругленные края */
     border: 2px solid #20232a; /* Пространство между прокруткой и дорожкой */
 }
 
-.diceList::-webkit-scrollbar-thumb:hover {
+.list::-webkit-scrollbar-thumb:hover {
     background: #ffffff; /* Цвет прокрутки при наведении */
 }
 
-.diceList li {
+.list li {
     display: flex;
     align-items: flex-start; /* Выравнивание элементов по верхнему краю */
     padding: 0.8em 1em;
@@ -72,22 +74,22 @@
     transition: background-color 0.3s ease;
 }
 
-.diceList li.active {
+.list li.active {
     background-color: #61dafb; /* Меняем фон при выборе */
     color: #20232a; /* Темный цвет текста */
 }
 
-.diceList li.disable {
+.list li.disable {
     display: none;
 }
 
-.diceList li:hover {
+.list li:hover {
     background-color: #61dafb; /* Меняем фон при наведении */
     color: #20232a; /* Темный цвет текста */
 }
 
 /* Стили для изображений */
-.diceList li img {
+.list li img {
     width: 100px;
     height: 100px;
     object-fit: cover;
@@ -97,9 +99,19 @@
 }
 
 /* Стили для текста */
-.diceList li span {
+.list li span {
     font-size: 1.1em;
     word-wrap: break-word; /* Переносим текст на новую строку, если он длинный */
     overflow-wrap: break-word; /* Совместимость с другими браузерами */
     line-height: 1.5; /* Увеличиваем межстрочный интервал для читаемости */
+}
+
+/* Убираем верхний отступ у первого элемента */
+.list li:first-child {
+    margin-top: 0;
+}
+
+/* Убираем нижний отступ у последнего элемента */
+.list li:last-child {
+    margin-bottom: 0;
 }

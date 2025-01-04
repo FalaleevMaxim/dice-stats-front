@@ -1,7 +1,7 @@
 import {ToastContainer, toast} from 'react-toastify';
 import {useState} from 'react'
 import classes from './CharactersPage.module.css';
-import CharacterList from "../../components/characterlist/CharacterList.jsx";
+import CharacterList from "../../components/lists/CharacterList.jsx";
 
 
 function CharactersPage() {

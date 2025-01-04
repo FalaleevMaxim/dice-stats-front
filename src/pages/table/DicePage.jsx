@@ -2,7 +2,7 @@ import ImageCropper from "../../components/cropper/ImageCropper.jsx";
 import {ToastContainer, toast} from 'react-toastify';
 import {useRef, useState} from "react";
 import classes from "./DiceTablePage.module.css"
-import DiceList from "../../components/dicelist/DiceList.jsx";
+import DiceList from "../../components/lists/DiceList.jsx";
 
 const DicePage = () => {
     const [inputName, setInputName] = useState("")

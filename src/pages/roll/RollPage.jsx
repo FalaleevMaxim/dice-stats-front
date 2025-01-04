@@ -1,5 +1,5 @@
-import CharacterList from "../../components/characterlist/CharacterList.jsx";
-import DiceList from "../../components/dicelist/DiceList.jsx";
+import CharacterList from "../../components/lists/CharacterList.jsx";
+import DiceList from "../../components/lists/DiceList.jsx";
 import {useState} from "react";
 import {ToastContainer, toast} from "react-toastify";
 import classes from "./RollPage.module.css";
