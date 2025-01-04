@@ -1,5 +1,6 @@
 import {ToastContainer, toast} from 'react-toastify';
 import {useState} from 'react'
+import { useNavigate } from "react-router-dom";
 import classes from './CharactersPage.module.css';
 import CharacterList from "../../components/lists/CharacterList.jsx";
 
@@ -8,6 +9,7 @@ function CharactersPage() {
     const [inputName, setInputName] = useState("")
     const [refreshKey, setRefreshKey] = useState(0);
     const [selected, setSelected] = useState(null);
+    const navigate = useNavigate();
 
     async function saveCharacter() {
         let response
@@ -47,7 +49,10 @@ function CharactersPage() {
 
     return (
         <div className={classes.pageContainer}>
-            <CharacterList refreshKey={refreshKey} onSelectionChange={onSelectionChange}/>
+            <CharacterList
+                refreshKey={refreshKey}
+                onSelectionChange={onSelectionChange}
+                onDoubleClick={(char) => navigate("/character/" + char.id)}/>
             <form>
                 <label htmlFor="name">{selected ? "Переименовать" : "Добавить"} персонажа: </label>
                 <input

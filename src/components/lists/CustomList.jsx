@@ -1,7 +1,7 @@
 import {useEffect, useState} from "react";
 import classes from "./CustomList.module.css";
 
-function CustomList({requestFunction, hasImage, refreshKey, onSelectionChange, searchPlaceholder}) {
+function CustomList({requestFunction, hasImage, searchPlaceholder, refreshKey, onSelectionChange, onDoubleClick}) {
     const [content, setContent] = useState([])
     const [selected, setSelected] = useState(null)
     const [search, setSearch] = useState("")
@@ -54,7 +54,8 @@ function CustomList({requestFunction, hasImage, refreshKey, onSelectionChange, s
                 {content.map((item) => (
                     <li key={item.id}
                         className={!item.name.toUpperCase().includes(search.toUpperCase()) ? classes.disable : selected?.id === item.id ? classes.active : ""}
-                        onClick={() => changeSelection(item)}>
+                        onClick={() => changeSelection(item)}
+                        onDoubleClick={() => onDoubleClick && onDoubleClick(item)}>
                         {hasImage && <img src={item.image} alt={item.name}/>}
                         <span>{item.name}</span>
                     </li>

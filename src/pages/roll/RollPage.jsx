@@ -18,13 +18,15 @@ function  RollPage() {
             },
             body: JSON.stringify({
                 result: rollResult,
-                character: selectedCharacter,
+                character: selectedCharacter.id,
                 dice: selectedDice.id
             })
         })
         if (response.ok) {
             console.log("Успешно добавлен!")
             toast.success("Успешно добавлен!");
+        } else {
+            toast.error("Ошибка")
         }
     }
 
