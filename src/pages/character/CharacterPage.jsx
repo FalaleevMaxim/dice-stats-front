@@ -1,81 +1,102 @@
-import {useParams} from "react-router-dom";
-import React, {useEffect, useState} from "react";
+import { useParams } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import RollHistogram from "../../components/histogram/RollHistogram.jsx";
 import RollHistoryChart from "../../components/chart/RollHistoryChart.jsx";
+import classes from "./CharacterPage.module.css";
 
 function CharacterPage() {
-    const [character, setCharacter] = useState(null)
-    const [rolls, setRolls] = useState(null)
+    const [character, setCharacter] = useState(null);
+    const [rolls, setRolls] = useState(null);
     const { id } = useParams();
 
-    function fetchCharacter() {
-        try {
-            fetch("http://localhost:8080/character/" + id)
-                .then(response => response.json())
-                .then(data => {
-                    setCharacter(data)
-                    console.log("Данные персонажа: ", JSON.stringify(data))
-                })
-        } catch (e) {
-            console.error("Ошибка получения данных о персонаже", e)
-        }
-    }
-
-    function fetchRolls() {
-        try {
-            const baseURL = 'http://localhost:8080/roll/history';
-            const params = { characterId: id };
-            const url = new URL(baseURL);
-            url.search = new URLSearchParams(params).toString();
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    setRolls(data)
-                    console.log("История бросков: ", JSON.stringify(data))
-                })
-        } catch (e) {
-            console.error("Ошибка получения истории бросков", e)
-        }
-    }
-
     useEffect(() => {
-        fetchCharacter()
-        fetchRolls()
-    }, []);
+        async function fetchCharacter() {
+            try {
+                const response = await fetch("http://localhost:8080/character/" + id);
+                const data = await response.json();
+                setCharacter(data);
+            } catch (e) {
+                console.error("Ошибка получения данных о персонаже", e);
+            }
+        }
 
-    function getAverage() {
-        return rolls?.map(roll => roll.result).reduce((sum, num) => sum + num, 0) / rolls?.length
-    }
+        async function fetchRolls() {
+            try {
+                const baseURL = "http://localhost:8080/roll/history";
+                const params = { characterId: id };
+                const url = new URL(baseURL);
+                url.search = new URLSearchParams(params).toString();
+                const response = await fetch(url);
+                const data = await response.json();
+                setRolls(data);
+            } catch (e) {
+                console.error("Ошибка получения истории бросков", e);
+            }
+        }
 
-    function getCount(value) {
-        return rolls?.filter(roll => roll.result === value).length
-    }
+        fetchCharacter();
+        fetchRolls();
+    }, [id]);
 
-    function countAll() {
-        const data = Array(21).fill(0)
-        rolls.map(roll => roll.result).forEach(result => data[result] += 1 )
-        return data
-    }
+    const getAverage = () =>
+        rolls?.map((roll) => roll.result).reduce((sum, num) => sum + num, 0) / rolls?.length;
 
-    return (<>
-        {!character && <h1>Загрузка персонажа...</h1>}
-        {character && <h1>{character.name}</h1>}
+    const getCount = (value) => rolls?.filter((roll) => roll.result === value).length;
 
-        <h2>
+    const countAll = () => {
+        const data = Array(21).fill(0);
+        rolls?.map((roll) => roll.result).forEach((result) => (data[result] += 1));
+        return data;
+    };
+
+    return (
+        <div className={classes.pageContainer}>
+            {!character && <h1>Загрузка персонажа...</h1>}
+            {character && <h1 className={classes.characterName}>{character.name}</h1>}
             {rolls === null
-                ? 'Загрузка истории бросков...'
+                ? <h2>Загрузка истории бросков...</h2>
                 : rolls.length > 0
-                    ? 'Статистика:'
-                    : 'Нет бросков'}
-        </h2>
-        {rolls && rolls.length > 0 && <>
-            <h3>Среднее значение: {getAverage()}</h3>
-            <h3>Выпало 1: {getCount(1)}</h3>
-            <h3>Выпало 20: {getCount(20)}</h3>
-            <RollHistogram rollStats={countAll()} height={500} width={600}/>
-            <RollHistoryChart rollHistory={rolls.map(roll => roll.result)} height={500} width={600} />
-        </>}
-    </>)
+                    ? null
+                    : <h2>Нет бросков</h2>}
+
+            {rolls && rolls.length > 0 && (
+                <>
+                    <table className={classes.statsTable}>
+                        <thead>
+                        <tr>
+                            <th>Среднее значение</th>
+                            <th>Выпало 1</th>
+                            <th>Выпало 20</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>{getAverage().toFixed(2)}</td>
+                            <td>{getCount(1)}</td>
+                            <td>{getCount(20)}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div className={classes.graphContainer}>
+                        <div className={classes.graphWrapper}>
+                            <RollHistogram
+                                rollStats={countAll()}
+                                height={500}
+                                width={600}
+                            />
+                        </div>
+                        <div className={classes.graphWrapper}>
+                            <RollHistoryChart
+                                rolls={rolls}
+                                height={500}
+                                width={600}
+                            />
+                        </div>
+                    </div>
+                </>
+            )}
+        </div>
+    );
 }
 
-export default CharacterPage
+export default CharacterPage;

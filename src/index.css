@@ -80,3 +80,7 @@ button:disabled {
   background-color: #666;
   cursor: default;
 }
+
+.recharts-default-tooltip {
+  background-color: #282c34;
+}

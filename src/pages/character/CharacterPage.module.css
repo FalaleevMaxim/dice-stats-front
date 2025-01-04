@@ -1,0 +1,70 @@
+/* Основной контейнер страницы */
+.pageContainer {
+    padding: 1em 2em;
+    background-color: #282c34; /* Тёмный фон */
+    color: #61dafb; /* Голубой текст */
+    font-family: Arial, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5em; /* Расстояние между секциями */
+}
+
+/* Заголовок персонажа */
+.characterName {
+    font-size: 2em;
+    font-weight: bold;
+    text-align: center;
+}
+
+/* Секция графиков */
+.graphContainer {
+    display: flex;
+    justify-content: space-between; /* Распределяем графики по горизонтали */
+    width: 100%;
+    max-width: 1200px; /* Максимальная ширина */
+    gap: 0; /* Убираем расстояние между графиками */
+    box-sizing: border-box;
+    padding-left: 0; /* Убираем отступ слева */
+}
+
+/* Контейнер для каждого графика */
+.graphWrapper {
+    flex: 1; /* Одинаковая ширина для всех графиков */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: transparent; /* Убираем фон */
+    padding: 0; /* Убираем внутренние отступы */
+    box-shadow: none; /* Убираем тени */
+    border: none; /* Убираем границы */
+}
+
+/* Таблица для статистики */
+.statsTable {
+    width: 100%; /* Таблица занимает всю доступную ширину */
+    max-width: 800px; /* Ограничиваем максимальную ширину */
+    margin: 0 auto; /* Выравниваем по центру */
+    border-collapse: collapse; /* Убираем промежутки между ячейками */
+    text-align: center; /* Центрируем текст */
+    color: #61dafb; /* Голубой текст */
+    font-size: 1em;
+    margin-bottom: 1em; /* Отступ снизу */
+}
+
+.statsTable th,
+.statsTable td {
+    border: 1px solid #61dafb; /* Голубая граница */
+    padding: 0.5em 1em; /* Отступы внутри ячеек */
+}
+
+.statsTable th {
+    background-color: #20232a; /* Тёмный фон для заголовков */
+    font-weight: bold;
+    color: #ffffff; /* Белый текст для заголовков */
+}
+
+.statsTable td {
+    background-color: #282c34; /* Тёмный фон для значений */
+}
