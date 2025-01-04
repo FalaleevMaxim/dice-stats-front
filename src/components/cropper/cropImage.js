@@ -26,11 +26,7 @@ const getCroppedImg = async (imageSrc, crop) => {
         crop.height
     );
 
-    return new Promise((resolve) => {
-        canvas.toBlob((blob) => {
-            resolve(URL.createObjectURL(blob));
-        }, 'image/jpeg');
-    });
-};
+    return canvas.toDataURL('image/jpeg')
+}
 
 export default getCroppedImg;

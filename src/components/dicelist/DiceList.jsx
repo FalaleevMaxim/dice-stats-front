@@ -14,6 +14,7 @@ function DiceList({refreshKey, onSelectionChange}) {
 
     useEffect(() => {
         fetchDice()
+        setSelected(null)
     }, [refreshKey]);
 
     function changeSelection(clicked) {

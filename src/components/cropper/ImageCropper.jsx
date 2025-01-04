@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState, useImperativeHandle, forwardRef, useEffect} from 'react';
 import Cropper from 'react-easy-crop';
 import getCroppedImg from './cropImage'; // Утилита для обрезки изображения
 
-const ImageCropper = ({ initialImage, onSave }) => {
-    const [imageSrc, setImageSrc] = useState(null); // Источник изображения
+const ImageCropper = forwardRef(({ initialImage, onSelected }, ref) => {
+    const [imageSrc, setImageSrc] = useState(null);
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
     const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
@@ -16,12 +16,28 @@ const ImageCropper = ({ initialImage, onSave }) => {
         return () => setImageSrc(null)
     }, [initialImage]);
 
+    // Делаем метод "получить изображение" доступным через ref
+    useImperativeHandle(ref, () => ({
+        getCroppedImage: async () => {
+            console.log("getCroppedImage")
+            if (!imageSrc || !croppedAreaPixels) {
+                throw new Error('No image or cropped area specified');
+            }
+            return getCroppedImg(imageSrc, croppedAreaPixels);
+        },
+        cancel: () => {
+            setImageSrc(null)
+            onSelected(false)
+        }
+    }));
+
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onload = () => {
                 setImageSrc(reader.result);
+                onSelected(true)
             };
             reader.readAsDataURL(file);
         }
@@ -31,16 +47,6 @@ const ImageCropper = ({ initialImage, onSave }) => {
         setCroppedAreaPixels(croppedAreaPixels);
     };
 
-    const handleSave = async () => {
-        if (!imageSrc || !croppedAreaPixels) return;
-
-        const croppedImage = await getCroppedImg(imageSrc, croppedAreaPixels);
-        onSave(croppedImage); // Передача обрезанного изображения наружу
-
-        // Скрыть блок с обрезкой изображения
-        setImageSrc(null);
-    };
-
     return (
         <div>
             {!imageSrc && (
@@ -48,7 +54,7 @@ const ImageCropper = ({ initialImage, onSave }) => {
             )}
             {imageSrc && (
                 <div>
-                    <div style={{ position: 'relative', width: '100%', height: '400px' }}>
+                    <div style={{ position: 'relative', width: '600px', height: '400px' }}>
                         <Cropper
                             image={imageSrc}
                             crop={crop}
@@ -68,13 +74,11 @@ const ImageCropper = ({ initialImage, onSave }) => {
                             value={zoom}
                             onChange={(e) => setZoom(Number(e.target.value))}
                         />
-                        <button onClick={handleSave}>Сохранить</button>
-                        <button onClick={() => setImageSrc(null)}>Отмена</button>
                     </div>
                 </div>
             )}
         </div>
     );
-};
+});
 
 export default ImageCropper;
