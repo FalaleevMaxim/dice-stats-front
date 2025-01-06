@@ -1,15 +1,17 @@
 import ImageCropper from "../../components/cropper/ImageCropper.jsx";
 import {ToastContainer, toast} from 'react-toastify';
 import {useRef, useState} from "react";
-import classes from "./DiceTablePage.module.css"
+import classes from "./DiceListTablePage.module.css"
 import DiceList from "../../components/lists/DiceList.jsx";
+import {useNavigate} from "react-router-dom";
 
-const DicePage = () => {
+const DiceListPage = () => {
     const [inputName, setInputName] = useState("")
     const [refreshKey, setRefreshKey] = useState(0);
     const [selected, setSelected] = useState(null);
     const [selectedImage, setSelectedImage] = useState(false);
     const cropperRef = useRef();
+    const navigate = useNavigate();
 
     const handleSave = async () => {
         console.log("Saving")
@@ -63,7 +65,8 @@ const DicePage = () => {
     }
 
     return <div className={classes.pageContainer}>
-        <DiceList refreshKey={refreshKey} onSelectionChange={onSelectionChange}/>
+        <DiceList refreshKey={refreshKey} onSelectionChange={onSelectionChange}
+                  onDoubleClick={(char) => navigate("/dice/" + char.id)}/>
         <form>
             <label htmlFor="name">{selected ? "Редактировать" : "Добавить"} куб: </label>
             <input
@@ -81,4 +84,4 @@ const DicePage = () => {
         <ToastContainer autoClose={5000} position="top-center"/>
     </div>
 }
-export default DicePage
+export default DiceListPage

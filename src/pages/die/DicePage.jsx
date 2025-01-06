@@ -2,29 +2,29 @@ import { useParams } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import RollHistogram from "../../components/histogram/RollHistogram.jsx";
 import RollHistoryChart from "../../components/chart/RollHistoryChart.jsx";
-import classes from "./CharacterPage.module.css";
+import classes from "./DicePage.module.css";
 
-function CharacterPage() {
-    const [character, setCharacter] = useState(null);
+function DicePage() {
+    const [dice, setDice] = useState(null);
     const [allRolls, setAllRolls] = useState([]);
     const [lastRolls, setLastRolls] = useState([]);
     const { id } = useParams();
 
     useEffect(() => {
-        async function fetchCharacter() {
+        async function fetchDice() {
             try {
-                const response = await fetch("http://localhost:8080/character/" + id);
+                const response = await fetch("http://localhost:8080/dice/" + id);
                 const data = await response.json();
-                setCharacter(data);
+                setDice(data);
             } catch (e) {
-                console.error("Ошибка получения данных о персонаже", e);
+                console.error("Ошибка получения данных о кости", e);
             }
         }
 
         async function fetchRolls(setFunction, limit = 0) {
             try {
                 const baseURL = "http://localhost:8080/roll/history";
-                const params = { characterId: id };
+                const params = { diceId: id };
                 if (limit) {
                     params["limit"] = limit
                 }
@@ -38,7 +38,7 @@ function CharacterPage() {
             }
         }
 
-        fetchCharacter();
+        fetchDice();
         fetchRolls(setAllRolls);
         fetchRolls(setLastRolls, 20);
     }, [id]);
@@ -56,32 +56,43 @@ function CharacterPage() {
 
     return (
         <div className={classes.pageContainer}>
-            {!character && <h1>Загрузка персонажа...</h1>}
-            {character && <h1 className={classes.characterName}>{character.name}</h1>}
+            {!dice && <h1>Загрузка куба...</h1>}
+            {dice && (
+                <div className={classes.diceHeader}>
+                    <img src={dice.image} alt={dice.name} className={classes.diceImg} />
+                    <div>
+                        <h1 className={classes.diceName}>{dice.name}</h1>
+                        {allRolls && allRolls.length > 0 ? (
+                            <table className={classes.statsTable}>
+                                <thead>
+                                <tr>
+                                    <th>Среднее значение</th>
+                                    <th>Выпало 1</th>
+                                    <th>Выпало 20</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>{getAverage().toFixed(2)}</td>
+                                    <td>{getCount(1)}</td>
+                                    <td>{getCount(20)}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        ) : (
+                            <p className={classes.noRollsText}>Нет бросков</p>
+                        )}
+                    </div>
+                </div>
+            )}
+
             {allRolls === null
                 ? <h2>Загрузка истории бросков...</h2>
                 : allRolls.length > 0
                     ? null
                     : <h2>Нет бросков</h2>}
 
-            {allRolls && allRolls.length > 0 && (
                 <>
-                    <table className={classes.statsTable}>
-                        <thead>
-                        <tr>
-                            <th>Среднее значение</th>
-                            <th>Выпало 1</th>
-                            <th>Выпало 20</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>{getAverage().toFixed(2)}</td>
-                            <td>{getCount(1)}</td>
-                            <td>{getCount(20)}</td>
-                        </tr>
-                        </tbody>
-                    </table>
                     <div className={classes.graphContainer}>
                         <div className={classes.graphWrapper}>
                             <RollHistogram
@@ -99,9 +110,9 @@ function CharacterPage() {
                         </div>
                     </div>
                 </>
-            )}
+
         </div>
     );
 }
 
-export default CharacterPage;
+export default DicePage;
